@@ -59,12 +59,9 @@ require_once '../model.php';
 
   if (empty($_POST["gender"])) {
     $gendererror = "Select gender";
-  } else {
-    if($_POST["gender"] == 1)
-    {$data["gender"] = 1;}
-    else{
-      $data["gender"] = 0;
-    }
+  }
+  else{
+    $data["gender"] = $_POST['gender'];
   }
   if(empty($_POST["contact"])){
     $contacterror = "You Must Enter Your Contact Number.";
@@ -154,8 +151,8 @@ require_once '../model.php';
   }
 
 
-  $data['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT, ["cost" => 12]);
-
+  #$data['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT, ["cost" => 12]);
+  $data['password'] = $_POST['password'];
 
   if(empty($fnameerror)&& empty($lnameerror) && empty($doberror) && empty($gendererror) && empty($contacterror)&& empty($emailerror) && empty($nationalityerror) && empty($addresserror) && empty($blooderror)&& empty($depterror) && empty($pperror))
  {

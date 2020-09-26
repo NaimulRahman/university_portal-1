@@ -1,13 +1,13 @@
-<?php
+<?php 
+
 session_start();
-if(isset($_SESSION['uname'])){
+if(isset($_SESSION['uname']) && $_SESSION['type'] == "admin"){
 }
 
 else{
 
-	echo "<script>location.href='loginAdmin.php'</script>";
+  echo "<script>location.href='login.php'</script>";
 }
-
 require_once 'controller/studentInfo.php';
 
 $students = fetchAllStudents();
@@ -20,9 +20,6 @@ $students = fetchAllStudents();
 <html>
 <head>
   <title></title>
- 
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-
 
 </head>
 <body>
@@ -33,24 +30,26 @@ $students = fetchAllStudents();
 	<span class="textcenter textmain"><h1>Show All Students</h1></span>
 	<div class="textcenter">
 	<div class="main_internaldiv textleft fontsize160">
-	<div class="searchbox">
 
-	<input placeholder="Enter ID to search" class="searchtext" autocomplete="off" type="text" name="id" required/>
+	<div class="searchbox">
+	<input id="search" placeholder="Enter ID to search" class="searchtext" autocomplete="off" type="text" name="search" required/>
 	</div>
 
-
-   <table class="table">
+	<div id="searched" class="textmain"></div>
+   <table class="table" id="table">
      <thead>
-     	 <th>ID</th>
+    <tr>
+     	<th>ID</th>
 		<th>First Name</th>
 		<th>Last Name</th>
 		<th>Image</th>
 		<th>Action</th>
+	</tr>
      </thead>
-     <tbody>
+     <tbody id="tablebody">
      	  <?php foreach ($students as $i => $student): ?>
 			<tr>
-				<td data-label="ID"><abbr title="Click here to see all full details"><a href="showStudent.php?id=<?php echo $student['id'] ?>"><span class="textmain"><?php echo $student['id'] ?></a></abbr></span></td>
+				<td data-label="ID"><abbr title="Click here to see all full details"><a href="showStudent.php?id=<?php echo $student['id'] ?>"><span class="textmain"><?php echo strval($student['id']) ?></a></abbr></span></td>
 
 				<td data-label="First Name"><?php echo $student['firstname'] ?></td>
 				<td data-label="Last Name"><?php echo $student['lastname'] ?></td>
@@ -72,5 +71,8 @@ $students = fetchAllStudents();
 
 <?php include('footer.php');?>
 
+
+<script type="text/javascript" src="js/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>

@@ -1,11 +1,12 @@
 <?php 
+
 session_start();
-if(isset($_SESSION['uname'])){
+if(isset($_SESSION['uname']) && $_SESSION['type'] == "admin"){
 }
 
 else{
 
-	echo "<script>location.href='loginAdmin.php'</script>";
+  echo "<script>location.href='login.php'</script>";
 }
 
 require_once 'controller/studentInfo.php';
@@ -18,6 +19,7 @@ $student = fetchStudent($_GET['id']);
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	
 </head>
 <body>
 
@@ -28,10 +30,20 @@ $student = fetchStudent($_GET['id']);
 	<div class="textcenter">
 	<div class="main_internaldiv textleft fontsize160">
 		<form action="controller/updateStudent.php" method="POST" enctype="multipart/form-data">
+			<div class="image">
+			<img src= '<?php echo $student['image']; ?>' alt="Profile Picture" class="userimage">
+			</div>
+			<br>
 
-			<img src= <?php echo $student['image']; ?> alt="Profile Picture" class="userimage"><br>
-  					<input type="file" name="file">
-  					<br>
+			
+				<input type="file" id="file" name="file">
+  				<label for="file" class="filelabel" >Select</label>
+
+  				<br>
+			
+  					  			
+  			
+  			<br>
 
 			<div class="form">
 					<input value="<?php echo $student['firstname'] ?>" type="text" name="firstname" autocomplete="off" required />
@@ -55,7 +67,7 @@ $student = fetchStudent($_GET['id']);
 			</div>
 
 			<div class="form">
-					<select name="gender" required />
+					<select name="gender" required >
 						<option selected><?php echo $student['gender'] ?></option>	
 						<option value="Male">Male</option>
 						<option value="Female">Female</option>
@@ -80,7 +92,7 @@ $student = fetchStudent($_GET['id']);
 			</div>
 
 			<div class="form">
-					<select name="nationality" required />
+					<select name="nationality" required >
 						<option selected><?php echo $student['nationality'] ?>"</option>
 						<option value="Bangladesh">Bangladesh</option>
 						</select>
@@ -97,7 +109,7 @@ $student = fetchStudent($_GET['id']);
 			</div>
 
 			<div class="form">
-					<select name="blood" required />
+					<select name="blood" required >
 						<option selected><?php echo $student['blood'] ?>"</option>
 						<option value="A+ve">A+ve</option>
 						<option value="A+ve">B+ve</option>
@@ -133,10 +145,11 @@ $student = fetchStudent($_GET['id']);
 			<input type="submit" value="submit" name="submit">
 
 		</form>
-	</div>
-	
+</div>
 </div>
 <?php include('footer.php');?>
+
+
 
 </body>
 </html>
